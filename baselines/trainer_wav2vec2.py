@@ -1,4 +1,3 @@
-
 from model import Wav2VecModel
 from dataset import S2IDataset, collate_fn
 
@@ -40,7 +39,7 @@ class LightningModel(pl.LightningModule):
         x, y = batch
         y = y.view(-1)
 
-        logits = self(x)        
+        logits = self(x)
         probs = F.softmax(logits, dim=1)
         loss = self.loss_fn(logits, y)
 
@@ -73,13 +72,13 @@ class LightningModel(pl.LightningModule):
         return {'val_loss':loss, 
                 'val_acc':acc,
                 }
-        
+
 
 if __name__ == "__main__":
 
     dataset = S2IDataset(
-        csv_path="/root/Speech2Intent/dataset/speech-to-intent/train.csv",
-        wav_dir_path="/root/Speech2Intent/dataset/speech-to-intent/",
+        csv_path="/home/rmaia/corporas/speech-to-intent/train.csv",
+        wav_dir_path="/home/rmaia/corporas/speech-to-intent",
     )
 
     train_len = int(len(dataset) * 0.90)
@@ -90,16 +89,16 @@ if __name__ == "__main__":
 
     trainloader = torch.utils.data.DataLoader(
             train_dataset, 
-            batch_size=16, 
+            batch_size=2, 
             shuffle=True, 
-            num_workers=4,
+            num_workers=16,
             collate_fn = collate_fn,
         )
     
     valloader = torch.utils.data.DataLoader(
             val_dataset, 
-            batch_size=16, 
-            num_workers=4,
+            batch_size=2, 
+            num_workers=16,
             collate_fn = collate_fn,
         )
 
@@ -119,9 +118,9 @@ if __name__ == "__main__":
             filename=run_name + "-epoch={epoch}.ckpt")
 
     trainer = Trainer(
-            fast_dev_run=True, 
+            fast_dev_run=False, 
             gpus=1, 
-            max_epochs=50, 
+            max_epochs=30, 
             checkpoint_callback=True,
             callbacks=[
                 model_checkpoint_callback,
@@ -130,5 +129,3 @@ if __name__ == "__main__":
             )
 
     trainer.fit(model, train_dataloader=trainloader, val_dataloaders=valloader)
-
-    

@@ -81,8 +81,8 @@ if __name__ == "__main__":
 
     # skit-s2i dataset
     dataset = S2IMELDataset(
-        csv_path="/root/Speech2Intent/dataset/speech-to-intent/train.csv",
-        wav_dir_path="/root/Speech2Intent/dataset/speech-to-intent/"
+        csv_path="/home/rmaia/corporas/speech-to-intent/train.csv",
+        wav_dir_path="/home/rmaia/corporas/speech-to-intent",
     )   
 
     # train-validation split
@@ -94,16 +94,16 @@ if __name__ == "__main__":
     # dataloaders
     trainloader = torch.utils.data.DataLoader(
             train_dataset, 
-            batch_size=8, 
+            batch_size=2, 
             shuffle=True, 
-            num_workers=4,
+            num_workers=16,
             collate_fn = collate_mel_fn,
         )
     
     valloader = torch.utils.data.DataLoader(
             val_dataset, 
-            batch_size=8, 
-            num_workers=4,
+            batch_size=2, 
+            num_workers=16,
             collate_fn = collate_mel_fn,
         )
 

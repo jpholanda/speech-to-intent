@@ -73,20 +73,36 @@ class S2IMELDataset(torch.utils.data.Dataset):
         return mel, intent_class
 
 if __name__ == "__main__":
-    dataset = S2IMELDataset(
-        csv_path="/root/Speech2Intent/dataset/speech-to-intent/train.csv",
-        wav_dir_path="/root/Speech2Intent/dataset/speech-to-intent/",
-        sr=16000)
-    wav_tensor, intent_class = dataset[0] 
+    dataset1 = S2IMELDataset(
+        csv_path="/home/rmaia/corporas/speech-to-intent/train.csv",
+        wav_dir_path="/home/rmaia/corporas/speech-to-intent") #,
+    dataset2 = S2IDataset(
+        csv_path="/home/rmaia/corporas/speech-to-intent/train.csv",
+        wav_dir_path="/home/rmaia/corporas/speech-to-intent") #,
+#        sr=16000)
+    wav_tensor, intent_class = dataset1[0] 
     print(wav_tensor.shape, intent_class)
 
-    trainloader = torch.utils.data.DataLoader(
-            dataset, 
+    wav_tensor, intent_class = dataset2[0] 
+    print(wav_tensor.shape, intent_class)
+
+    trainloader1 = torch.utils.data.DataLoader(
+            dataset1, 
             batch_size=3, 
             shuffle=True, 
             num_workers=4,
             collate_fn = collate_mel_fn,
         )
-    x, y = next(iter(trainloader))
+    trainloader2 = torch.utils.data.DataLoader(
+            dataset2, 
+            batch_size=3, 
+            shuffle=True, 
+            num_workers=4,
+            collate_fn = collate_fn,
+        )
+    x, y = next(iter(trainloader1))
+    print(x.shape)
+    print(y.shape)
+    x, y = next(iter(trainloader2))
     print(x.shape)
     print(y.shape)
