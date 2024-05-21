@@ -1,10 +1,10 @@
-# Skit-S2I Dataset
+# S2I Classification
 
-Dataset Release for Intent Classification task from Speech
+Intent Classification task from Speech
 
 ## About
 
-This is a dataset for Intent classification from human speech, and covers 14 coarse-grained intents from the Banking domain. This work is inspired by a similar release in the [Minds-14 dataset](https://huggingface.co/datasets/PolyAI/minds14) - here, we restrict ourselves to Indian English but with a much larger training set. The dataset is split into:
+This is a for from [skit-ai/speech-to-intent-dataset](https://github.com/skit-ai/speech-to-intent-dataset). It contains code to run Intent classification from human speech using the dataset provided in the aforementioned link. The dataset covers 14 coarse-grained intents from the Banking domain. This work is inspired by a similar release in the [Minds-14 dataset](https://huggingface.co/datasets/PolyAI/minds14) - here, we restrict ourselves to Indian English but with a much larger training set. The dataset is split into:
 - test - `100` samples per intent
 - train - `>650` samples per intent
 
