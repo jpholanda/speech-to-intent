@@ -80,10 +80,7 @@ class LightningModel(pl.LightningModule):
 if __name__ == "__main__":
 
     # skit-s2i dataset
-    dataset = S2IMELDataset(
-        csv_path="/home/rmaia/corporas/speech-to-intent/train.csv",
-        wav_dir_path="/home/rmaia/corporas/speech-to-intent",
-    )   
+    dataset = S2IMELDataset()
 
     # train-validation split
     train_len = int(len(dataset) * 0.90)

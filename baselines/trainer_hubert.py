@@ -77,10 +77,7 @@ class LightningModel(pl.LightningModule):
 
 if __name__ == "__main__":
 
-    dataset = S2IDataset(
-        csv_path="/home/rmaia/corporas/speech-to-intent/train.csv",
-        wav_dir_path="/home/rmaia/corporas/speech-to-intent",
-    )
+    dataset = S2IDataset()
 
     train_len = int(len(dataset) * 0.90)
     val_len =  len(dataset) - train_len

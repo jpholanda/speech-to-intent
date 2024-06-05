@@ -7,6 +7,8 @@ import torch.nn.utils.rnn as rnn_utils
 
 import whisper
 
+DATASET_ROOT = "/home/jpardholanda/speech-to-intent/dataset"
+
 def collate_fn(batch):
     (seq, label) = zip(*batch)
     seql = [x.reshape(-1,) for x in seq]
@@ -21,7 +23,10 @@ def collate_mel_fn(batch):
     return data, label
 
 class S2IDataset(torch.utils.data.Dataset):
-    def __init__(self, csv_path=None, wav_dir_path=None):
+    def __init__(self, dataset_root=DATASET_ROOT):
+        csv_path = os.path.join(dataset_root, 'train.csv')
+        wav_dir_path = dataset_root
+
         self.df = pd.read_csv(csv_path)
         self.wav_dir = wav_dir_path
         self.resmaple = torchaudio.transforms.Resample(8000, 16000)
@@ -73,12 +78,8 @@ class S2IMELDataset(torch.utils.data.Dataset):
         return mel, intent_class
 
 if __name__ == "__main__":
-    dataset1 = S2IMELDataset(
-        csv_path="/home/rmaia/corporas/speech-to-intent/train.csv",
-        wav_dir_path="/home/rmaia/corporas/speech-to-intent") #,
-    dataset2 = S2IDataset(
-        csv_path="/home/rmaia/corporas/speech-to-intent/train.csv",
-        wav_dir_path="/home/rmaia/corporas/speech-to-intent") #,
+    dataset1 = S2IMELDataset() #,
+    dataset2 = S2IDataset() #,
 #        sr=16000)
     wav_tensor, intent_class = dataset1[0] 
     print(wav_tensor.shape, intent_class)
