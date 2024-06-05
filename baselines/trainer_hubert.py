@@ -1,4 +1,4 @@
-from trainer_config import NUM_WORKERS
+from trainer_config import NUM_WORKERS, get_arguments
 from model import HubertSSLModel
 from dataset import S2IDataset, collate_fn
 
@@ -77,6 +77,7 @@ class LightningModel(pl.LightningModule):
     
 
 if __name__ == "__main__":
+    args = get_arguments()
 
     dataset = S2IDataset()
 
@@ -116,7 +117,7 @@ if __name__ == "__main__":
             filename=run_name + "-epoch={epoch}.ckpt")
 
     trainer = Trainer(
-            fast_dev_run=False, 
+            fast_dev_run=args.dev,
             gpus=1, 
             max_epochs=50, 
             checkpoint_callback=True,

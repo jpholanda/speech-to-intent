@@ -1,4 +1,4 @@
-from trainer_config import NUM_WORKERS
+from trainer_config import NUM_WORKERS, get_arguments
 from model import WhisperModel
 from dataset import S2IMELDataset, collate_mel_fn
 
@@ -79,6 +79,7 @@ class LightningModel(pl.LightningModule):
     
 
 if __name__ == "__main__":
+    args = get_arguments()
 
     # skit-s2i dataset
     dataset = S2IMELDataset()
@@ -122,7 +123,7 @@ if __name__ == "__main__":
             filename=run_name + "-epoch={epoch}.ckpt")
 
     trainer = Trainer(
-            fast_dev_run=False, # true for dev run
+            fast_dev_run=args.dev, # true for dev run
             gpus=1, 
             max_epochs=50, 
             checkpoint_callback=True,
