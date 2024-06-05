@@ -1,3 +1,4 @@
+from trainer_config import NUM_WORKERS
 from model import Wav2VecModel
 from dataset import S2IDataset, collate_fn
 
@@ -88,14 +89,14 @@ if __name__ == "__main__":
             train_dataset, 
             batch_size=2, 
             shuffle=True, 
-            num_workers=16,
+            num_workers=NUM_WORKERS,
             collate_fn = collate_fn,
         )
     
     valloader = torch.utils.data.DataLoader(
             val_dataset, 
             batch_size=2, 
-            num_workers=16,
+            num_workers=NUM_WORKERS,
             collate_fn = collate_fn,
         )
 

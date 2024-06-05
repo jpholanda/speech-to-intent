@@ -1,3 +1,4 @@
+from trainer_config import NUM_WORKERS
 from model import WhisperModel
 from dataset import S2IMELDataset, collate_mel_fn
 
@@ -93,14 +94,14 @@ if __name__ == "__main__":
             train_dataset, 
             batch_size=2, 
             shuffle=True, 
-            num_workers=16,
+            num_workers=NUM_WORKERS,
             collate_fn = collate_mel_fn,
         )
     
     valloader = torch.utils.data.DataLoader(
             val_dataset, 
             batch_size=2, 
-            num_workers=16,
+            num_workers=NUM_WORKERS,
             collate_fn = collate_mel_fn,
         )
 
