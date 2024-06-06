@@ -8,6 +8,7 @@ def get_arguments():
                         dest='dev',
                         type=bool,
                         default=False,
+                        action=argparse.BooleanOptionalAction,
                         help='enables dev mode (runs only one step to check if everything\'s working)')
     args = parser.parse_args()
     return args

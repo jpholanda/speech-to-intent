@@ -13,4 +13,4 @@
 #export TORCH_CUDA_VERSION=cu122
 export TORCH_CUDA_VERSION=cu117
 
-srun python baselines/trainer_hubert.py
+srun python baselines/trainer_$1.py $2
