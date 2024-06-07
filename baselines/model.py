@@ -47,6 +47,7 @@ class Wav2VecModel(nn.Module):
         x = self.encoder(x).last_hidden_state
         x = torch.mean(x, dim=1)
         logits = self.intent_classifier(x)
+        x.to("cpu")
         return logits
 
 class HubertSSLModel(nn.Module):
@@ -71,4 +72,5 @@ class HubertSSLModel(nn.Module):
         x = self.encoder(x).last_hidden_state
         x = torch.mean(x, dim=1)
         logits = self.intent_classifier(x)
+        x.to("cpu")
         return logits
