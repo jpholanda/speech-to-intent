@@ -1,6 +1,7 @@
 import argparse
 
 NUM_WORKERS=16
+BATCH_SIZE=2
 
 def get_arguments():
     parser = argparse.ArgumentParser(description='model trainer')

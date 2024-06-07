@@ -1,4 +1,4 @@
-from trainer_config import NUM_WORKERS, get_arguments
+from trainer_config import NUM_WORKERS, get_arguments, BATCH_SIZE
 from model import HubertSSLModel
 from dataset import S2IDataset, collate_fn
 
@@ -88,7 +88,7 @@ if __name__ == "__main__":
 
     trainloader = torch.utils.data.DataLoader(
             train_dataset, 
-            batch_size=2, 
+            batch_size=BATCH_SIZE,
             shuffle=True, 
             num_workers=NUM_WORKERS,
             collate_fn = collate_fn,
@@ -96,7 +96,7 @@ if __name__ == "__main__":
     
     valloader = torch.utils.data.DataLoader(
             val_dataset, 
-            batch_size=2, 
+            batch_size=BATCH_SIZE,
             num_workers=NUM_WORKERS,
             collate_fn = collate_fn,
         )
