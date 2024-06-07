@@ -1,6 +1,6 @@
 import argparse
 
-NUM_WORKERS=1
+NUM_WORKERS=16
 
 def get_arguments():
     parser = argparse.ArgumentParser(description='model trainer')
