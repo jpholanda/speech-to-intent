@@ -88,7 +88,7 @@ if __name__ == "__main__":
 
     trainloader = torch.utils.data.DataLoader(
             train_dataset, 
-            batch_size=BATCH_SIZE,
+            batch_size=1,
             shuffle=True, 
             num_workers=NUM_WORKERS,
             collate_fn = collate_fn,
@@ -96,7 +96,7 @@ if __name__ == "__main__":
     
     valloader = torch.utils.data.DataLoader(
             val_dataset, 
-            batch_size=BATCH_SIZE,
+            batch_size=1,
             num_workers=NUM_WORKERS,
             collate_fn = collate_fn,
         )
