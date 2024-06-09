@@ -24,7 +24,7 @@ if __name__ == "__main__":
     parser.add_argument('--checkpoint', dest='checkpoint', help='checkpoint to load from', required=True)
     args = parser.parse_args()
 
-    dataset = S2IDataset()
+    dataset = S2IDataset(split='test')
 
     # change path to checkpoint
     model = LightningModel.load_from_checkpoint(args.checkpoint)
