@@ -1,11 +1,12 @@
 from trainer_config import NUM_WORKERS, get_arguments, BATCH_SIZE
 from model import WhisperModel
-from dataset import S2IMELDataset, collate_mel_fn
+from dataset import S2IMELDataset, collate_mel_fn, S2IDataset
 
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import pytorch_lightning as pl
+from huggingface_hub import PyTorchModelHubMixin
 
 from pytorch_lightning import Trainer
 from pytorch_lightning.callbacks import ModelCheckpoint
@@ -23,11 +24,10 @@ os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
 os.environ["CUDA_VISIBLE_DEVICES"]="0"
 
 
-class LightningModel(pl.LightningModule):
+class LightningModel(pl.LightningModule, PyTorchModelHubMixin):
     def __init__(self,):
         super().__init__()
-        # tiny/small model
-        self.model = WhisperModel("small.en") 
+        self.model = WhisperModel()
 
     def forward(self, x):
         return self.model(x)
@@ -42,6 +42,7 @@ class LightningModel(pl.LightningModule):
     def training_step(self, batch, batch_idx):
         x, y = batch
         y = y.view(-1)
+
         logits = self(x)        
         probs = F.softmax(logits, dim=1)
         loss = self.loss_fn(logits, y)
@@ -82,7 +83,7 @@ if __name__ == "__main__":
     args = get_arguments()
 
     # skit-s2i dataset
-    dataset = S2IMELDataset()
+    dataset = S2IDataset()
 
     # train-validation split
     train_len = int(len(dataset) * 0.90)
