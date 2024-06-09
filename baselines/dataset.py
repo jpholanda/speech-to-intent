@@ -50,7 +50,10 @@ class S2IDataset(torch.utils.data.Dataset):
         return wav_tensor, intent_class
 
 class S2IMELDataset(torch.utils.data.Dataset):
-    def __init__(self, csv_path=None, wav_dir_path=None):
+    def __init__(self, dataset_root=DATASET_ROOT):
+        csv_path = os.path.join(dataset_root, 'train.csv')
+        wav_dir_path = dataset_root
+
         self.df = pd.read_csv(csv_path)
         self.wav_dir = wav_dir_path
         self.resmaple = torchaudio.transforms.Resample(8000, 16000)
