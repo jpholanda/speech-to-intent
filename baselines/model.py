@@ -30,7 +30,7 @@ class Wav2VecModel(nn.Module):
         super().__init__()
 
         self.processor = Wav2Vec2Processor.from_pretrained("facebook/wav2vec2-base-960h")
-        self.encoder = Wav2Vec2Model.from_pretrained("facebook/wav2vec2-large-960h")
+        self.encoder = Wav2Vec2Model.from_pretrained("facebook/wav2vec2-base-960h")
 
         for param in self.encoder.parameters():
             param.requires_grad = False
@@ -39,7 +39,7 @@ class Wav2VecModel(nn.Module):
             param.requires_grad = True
 
         self.intent_classifier = nn.Sequential(
-            nn.Linear(1024, 14),
+            nn.Linear(768, 14),
         )
 
     def forward(self, x):
