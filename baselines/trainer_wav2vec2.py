@@ -6,6 +6,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import pytorch_lightning as pl
+from huggingface_hub import PyTorchModelHubMixin
 
 from pytorch_lightning import Trainer
 from pytorch_lightning.callbacks import ModelCheckpoint
@@ -21,7 +22,7 @@ os.environ['WANDB_MODE'] = 'online'
 os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"  
 os.environ["CUDA_VISIBLE_DEVICES"]="0"
 
-class LightningModel(pl.LightningModule):
+class LightningModel(pl.LightningModule, PyTorchModelHubMixin):
     def __init__(self,):
         super().__init__()
         self.model = Wav2VecModel()
