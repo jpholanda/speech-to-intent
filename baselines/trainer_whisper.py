@@ -106,7 +106,7 @@ if __name__ == "__main__":
             collate_fn = collate_mel_fn,
         )
 
-    model = LightningModel()
+    model = LightningModel.load_from_checkpoint(args.checkpoint) if args.checkpoint else LightningModel()
 
     # update the logger to Wandb or Tensorboard
     run_name = "whisper-asr-small"

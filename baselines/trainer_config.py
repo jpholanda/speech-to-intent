@@ -5,6 +5,7 @@ BATCH_SIZE=2
 
 def get_arguments():
     parser = argparse.ArgumentParser(description='model trainer')
+
     parser.add_argument('--dev',
                         dest='dev',
                         action='store_true',
@@ -14,6 +15,8 @@ def get_arguments():
                         action='store_false',
                         help='do not enable dev mode (runs normally)')
     parser.set_defaults(dev=False)
+
+    parser.add_argument('--checkpoint', dest='checkpoint', help='checkpoint to resume training from')
 
     args = parser.parse_args()
     return args

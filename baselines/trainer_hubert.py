@@ -101,7 +101,7 @@ if __name__ == "__main__":
             collate_fn = collate_fn,
         )
 
-    model = LightningModel()
+    model = LightningModel.load_from_checkpoint(args.checkpoint) if args.checkpoint else LightningModel()
 
     run_name = "hubert-ssl"
     logger = WandbLogger(
