@@ -35,8 +35,7 @@ if __name__ == "__main__":
     preds = []
 
     for x, label in tqdm(dataset):
-        x_tensor = x.to("cuda").unsqueeze(0)
-        y_hat_l = model(x_tensor)
+        y_hat_l = model(x)
 
         probs = F.softmax(y_hat_l, dim=1).detach().cpu().view(1, 14)
         pred = probs.argmax(dim=1).detach().cpu().numpy().astype(int)
