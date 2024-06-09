@@ -29,7 +29,7 @@ class Wav2VecModel(nn.Module):
     def __init__(self, ):
         super().__init__()
 
-        self.processor = Wav2Vec2Processor.from_pretrained("facebook/wav2vec2-large-960h")
+        self.processor = Wav2Vec2Processor.from_pretrained("facebook/wav2vec2-base-960h")
         self.encoder = Wav2Vec2Model.from_pretrained("facebook/wav2vec2-large-960h")
 
         for param in self.encoder.parameters():
@@ -59,7 +59,7 @@ class HubertSSLModel(nn.Module):
 
         for param in self.encoder.parameters():
             param.requires_grad = False
-        
+
         for param in self.encoder.encoder.parameters():
             param.requires_grad = True
 
