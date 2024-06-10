@@ -10,9 +10,9 @@ sys.path.append("/root/Speech2Intent/s2i-baselines")
 import torch.nn.functional as F
 
 # choose the model
-from trainer_hubert import LightningModel
-# from trainer_whisper import LightningModel
-# from trainer_wav2vec2 import LightningModel
+from hubert.trainer import LightningModel as HubertModel
+from wav2vec2.trainer import LightningModel as Wav2VecModel
+from whisper.trainer import LightningModel as WhisperModel
 
 from dataset import S2IDataset
 
@@ -20,14 +20,20 @@ from tqdm import tqdm
 from sklearn.metrics import f1_score, accuracy_score
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='push to hub')
+    parser = argparse.ArgumentParser(description='test model')
+    parser.add_argument('--model', dest='model', help='model to test', required=True)
     parser.add_argument('--checkpoint', dest='checkpoint', help='checkpoint to load from', required=True)
     args = parser.parse_args()
 
     dataset = S2IDataset(split='test')
 
     # change path to checkpoint
-    model = LightningModel.load_from_checkpoint(args.checkpoint)
+    if args.model == 'hubert':
+        model = HubertModel.load_from_checkpoint(args.checkpoint)
+    elif args.model == 'wav2vec2':
+        model = Wav2VecModel.load_from_checkpoint(args.checkpoint)
+    else:
+        model = WhisperModel.load_from_checkpoint(args.checkpoint)
     model.to('cuda')
     model.eval()
 

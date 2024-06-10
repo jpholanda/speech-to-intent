@@ -1,6 +1,6 @@
-from trainer_hubert import LightningModel as HubertModel
-from trainer_wav2vec2 import LightningModel as Wav2VecModel
-from trainer_whisper import LightningModel as WhisperModel
+from hubert.trainer import LightningModel as HubertModel
+from wav2vec2.trainer import LightningModel as Wav2VecModel
+from whisper.trainer import LightningModel as WhisperModel
 import argparse
 
 if __name__ == '__main__':
