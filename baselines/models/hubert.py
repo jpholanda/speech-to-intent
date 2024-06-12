@@ -17,7 +17,11 @@ class HubertSSLClassifier(nn.Module):
             param.requires_grad = True
 
         self.intent_classifier = nn.Sequential(
-            nn.Linear(1024, 14),
+            nn.Linear(1024, 256),
+            nn.ReLU(),
+            nn.Linear(256, 64),
+            nn.ReLU(),
+            nn.Linear(64, 14),
         )
 
     def forward(self, x):
