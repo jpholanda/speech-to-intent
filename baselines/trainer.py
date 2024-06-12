@@ -1,6 +1,9 @@
 from trainer_config import NUM_WORKERS, get_arguments, BATCH_SIZE
-from model import HubertSSLModel
 from dataset import S2IDataset, collate_fn
+from models.ast import ASTClassifier
+from models.hubert import HubertSSLClassifier
+from models.wav2vec2 import Wav2VecClassifier
+from models.whisper import WhisperClassifier
 
 import torch
 import torch.nn as nn
@@ -23,9 +26,9 @@ os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
 os.environ["CUDA_VISIBLE_DEVICES"]="0"
 
 class LightningModel(pl.LightningModule, PyTorchModelHubMixin):
-    def __init__(self,):
+    def __init__(self, model):
         super().__init__()
-        self.model = HubertSSLModel()
+        self.model = model
 
     def forward(self, x):
         return self.model(x)
@@ -102,7 +105,14 @@ if __name__ == "__main__":
             collate_fn = collate_fn,
         )
 
-    model = LightningModel.load_from_checkpoint(args.checkpoint) if args.checkpoint else LightningModel()
+    if args.model == "hubert":
+        classifier = HubertSSLClassifier()
+    elif args.model == "wav2vec2":
+        classifier = Wav2VecClassifier()
+    else:
+        classifier = WhisperClassifier()
+
+    model = LightningModel.load_from_checkpoint(args.checkpoint) if args.checkpoint else LightningModel(classifier)
 
     run_name = "hubert-ssl"
     logger = WandbLogger(

@@ -5,7 +5,7 @@ import torch
 import torchaudio
 import torch.nn.utils.rnn as rnn_utils
 
-import whisper
+from models import whisper
 
 DATASET_ROOT = "/home/jpardholanda/speech-to-intent/dataset"
 

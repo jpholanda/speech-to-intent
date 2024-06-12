@@ -10,9 +10,9 @@ sys.path.append("/root/Speech2Intent/s2i-baselines")
 import torch.nn.functional as F
 
 # choose the model
-from hubert.trainer import LightningModel as HubertModel
-from wav2vec2.trainer import LightningModel as Wav2VecModel
-from whisper.trainer import LightningModel as WhisperModel
+from baselines.trainer import LightningModel as HubertModel
+from baselines.models.wav2vec2 import LightningModel as Wav2VecModel
+from baselines.models.whisper import LightningModel as WhisperModel
 
 from dataset import S2IDataset
 
