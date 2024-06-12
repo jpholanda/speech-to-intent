@@ -6,7 +6,7 @@ BATCH_SIZE=2
 def get_arguments():
     parser = argparse.ArgumentParser(description='model trainer')
 
-    parser.add_argument('--model', choices=["hubert", "wav2vec", "whisper"], required=True)
+    parser.add_argument('--model', choices=["hubert", "wav2vec", "whisper", "ast"], required=True)
 
     parser.add_argument('--dev',
                         dest='dev',

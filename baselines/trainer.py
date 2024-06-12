@@ -109,12 +109,14 @@ if __name__ == "__main__":
         classifier = HubertSSLClassifier()
     elif args.model == "wav2vec2":
         classifier = Wav2VecClassifier()
+    elif args.model == "ast":
+        classifier = ASTClassifier()
     else:
         classifier = WhisperClassifier()
 
     model = LightningModel.load_from_checkpoint(args.checkpoint) if args.checkpoint else LightningModel(classifier)
 
-    run_name = "hubert-ssl"
+    run_name = args.model
     logger = WandbLogger(
         name=run_name,
         project='S2I-baseline'
