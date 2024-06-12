@@ -20,7 +20,7 @@ class ASTClassifier(nn.Module):
         )
 
     def forward(self, x):
-        x = self.processor(x, sampling_rate=16000, return_tensors="pt")["input_values"].squeeze(0).to("cuda")
+        x = self.processor(x.to("cpu"), sampling_rate=16000, return_tensors="pt")["input_values"].squeeze(0).to("cuda")
         x = self.encoder(x).last_hidden_state
         x = torch.mean(x, dim=1)
         logits = self.intent_classifier(x)
