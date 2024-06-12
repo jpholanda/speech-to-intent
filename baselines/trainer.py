@@ -114,7 +114,7 @@ if __name__ == "__main__":
     else:
         classifier = WhisperClassifier()
 
-    model = LightningModel.load_from_checkpoint(args.checkpoint) if args.checkpoint else LightningModel(classifier)
+    model = LightningModel.load_from_checkpoint(args.checkpoint, model=classifier) if args.checkpoint else LightningModel(classifier)
 
     run_name = args.model
     logger = WandbLogger(

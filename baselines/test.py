@@ -1,6 +1,12 @@
 import argparse
 
 import warnings
+
+from models.ast import ASTClassifier
+from models.hubert import HubertSSLClassifier
+from models.wav2vec2 import Wav2VecClassifier
+from models.whisper import WhisperClassifier
+
 warnings.simplefilter(action='ignore', category=FutureWarning)
 warnings.simplefilter("ignore", UserWarning)
 
@@ -17,13 +23,24 @@ from sklearn.metrics import f1_score, accuracy_score
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='test model')
+    parser.add_argument('--model', dest='model', choices=['hubert', 'wav2vec2', 'whisper', 'ast'],
+                        help='model to test', required=True)
     parser.add_argument('--checkpoint', dest='checkpoint', help='checkpoint to load from', required=True)
     args = parser.parse_args()
 
     dataset = S2IDataset(split='test')
 
+    if args.model == "hubert":
+        classifier = HubertSSLClassifier()
+    elif args.model == "wav2vec2":
+        classifier = Wav2VecClassifier()
+    elif args.model == "ast":
+        classifier = ASTClassifier()
+    else:
+        classifier = WhisperClassifier()
+
     # change path to checkpoint
-    model = LightningModel.load_from_checkpoint(args.checkpoint)
+    model = LightningModel.load_from_checkpoint(args.checkpoint, model=classifier)
     model.to('cuda')
     model.eval()
 
