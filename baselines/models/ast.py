@@ -1,12 +1,12 @@
 import torch
 from torch import nn
-from transformers import AutoProcessor, ASTModel
+from transformers import ASTFeatureExtractor, ASTModel
 
 class ASTClassifier(nn.Module):
     def __init__(self, ):
         super().__init__()
 
-        self.processor = AutoProcessor.from_pretrained("MIT/ast-finetuned-audioset-10-10-0.4593")
+        self.processor = ASTFeatureExtractor.from_pretrained("MIT/ast-finetuned-audioset-10-10-0.4593")
         self.encoder = ASTModel.from_pretrained("MIT/ast-finetuned-audioset-10-10-0.4593")
 
         for param in self.encoder.parameters():
