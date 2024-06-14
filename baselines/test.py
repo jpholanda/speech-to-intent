@@ -26,6 +26,7 @@ if __name__ == "__main__":
     parser.add_argument('--model', dest='model', choices=['hubert', 'wav2vec2', 'whisper', 'ast'],
                         help='model to test', required=True)
     parser.add_argument('--checkpoint', dest='checkpoint', help='checkpoint to load from', required=True)
+    parser.add_argument('--device', dest='device', choices=['cpu', 'cuda'], default='cuda')
     args = parser.parse_args()
 
     dataset = S2IDataset(split='test')
@@ -33,7 +34,7 @@ if __name__ == "__main__":
     if args.model == "hubert":
         classifier = HubertSSLClassifier()
     elif args.model == "wav2vec2":
-        classifier = Wav2VecClassifier()
+        classifier = Wav2VecClassifier(device=args.device)
     elif args.model == "ast":
         classifier = ASTClassifier()
     else:
@@ -41,7 +42,7 @@ if __name__ == "__main__":
 
     # change path to checkpoint
     model = LightningModel.load_from_checkpoint(args.checkpoint, model=classifier)
-    model.to('cuda')
+    model.to(args.device)
     model.eval()
 
     trues=[]
