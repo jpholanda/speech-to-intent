@@ -11,9 +11,6 @@ class Wav2VecClassifier(nn.Module):
         self.encoder = Wav2Vec2Model.from_pretrained("facebook/wav2vec2-base-960h")
 
         for param in self.encoder.parameters():
-            param.requires_grad = False
-
-        for param in self.encoder.encoder.parameters():
             param.requires_grad = True
 
         self.intent_classifier = nn.Sequential(
