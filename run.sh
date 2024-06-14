@@ -13,4 +13,7 @@
 #export TORCH_CUDA_VERSION=cu122
 export TORCH_CUDA_VERSION=cu117
 
-srun python baselines/trainer.py "$@"
+SCRIPT=$1
+shift 1
+
+srun python baselines/"$SCRIPT".py "$@"
