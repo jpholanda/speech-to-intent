@@ -17,7 +17,9 @@ class Wav2VecClassifier(nn.Module):
             param.requires_grad = True
 
         self.intent_classifier = nn.Sequential(
-            nn.Linear(768, 14)
+            nn.Linear(768, 256),
+            nn.ReLU(),
+            nn.Linear(256, 14)
         )
 
     def forward(self, x):
